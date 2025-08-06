@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+using namespace std; 
+int lowerBound(vector<int>& nums, int key){
+    int end = nums.size() - 1, ans = nums[nums.size() - 1], st = 0, mid;
+    while(st <= end){
+        mid = st + (end - st) / 2;
+        if(nums[mid] >= key){
+            ans = nums[mid];
+            end = mid - 1;
+        }
+        else{
+            st = mid + 1;
+        }
+    }
+}
+int upperBound(vector<int>& arr, int key) {
+    int low = 0, high = arr.size() - 1;
+    int ans = arr.size();  // Default to "not found" case
+    
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] > key) {
+            ans = mid;         // Potential upper bound found
+            high = mid - 1;    // Try to find even smaller index on the left
+        } else {
+            low = mid + 1;     // Search in right half
+        }
+    }
+
+    return ans;  // Index of upper bound
+}
+int main ()
+{
+    vector<int> nums = {1,2,3,4,6,7,8};
+    int key = 7;
+    cout << "here we are returning index not Value : " << endl;
+    cout <<"LowerBound is: " <<  lowerBound(nums, 7) << endl;
+    cout <<"Upperboumd is: " <<  upperBound(nums, 7) << endl;
+
+    return 0;
+}
